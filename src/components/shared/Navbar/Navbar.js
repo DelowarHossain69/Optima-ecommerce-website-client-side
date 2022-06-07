@@ -22,9 +22,9 @@ const Navbar = () => {
       <li>
         <Link to="/contact">Contact</Link>
       </li>
-      <li>
+      {!user && <li>
         <Link to="/login">Login</Link>
-      </li>
+      </li>}
     </>
   );
   return (
