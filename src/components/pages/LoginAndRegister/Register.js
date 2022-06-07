@@ -15,16 +15,15 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  console.log(user);
   const onSubmit = async (data) => {
       const email = data?.email;
       const password = data?.password;
       const displayName = data?.name;
       const photoURL = 'https://i.ibb.co/Z6Sh6Vj/admin-user-icon-24.png';
 
-      // await createUserWithEmailAndPassword(email, password);
-      // await updateProfile({displayName, photoURL});
-      console.log(data);
+      await createUserWithEmailAndPassword(email, password);
+      await updateProfile({displayName, photoURL});
   }
 
   return (

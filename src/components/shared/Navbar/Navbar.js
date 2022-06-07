@@ -1,7 +1,16 @@
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
+import auth from './../../../firebase.init';
+import {signOut} from 'firebase/auth';
 
 const Navbar = () => {
+  const [user, loading] = useAuthState(auth);
+
+  const defaultProfileImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOYRUFgudcp4-wVpWkunSHifEyWiDe7kDrlw&usqp=CAU';
+
+  const profileImg =  defaultProfileImage;
+
   const navItem = (
     <>
       <li>
@@ -91,30 +100,35 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
-              <div class="dropdown dropdown-end">
+              {user && <div class="dropdown dropdown-end">
                 <label tabindex="0" class="btn btn-ghost btn-circle avatar">
                   <div class="w-10 rounded-full">
-                    <img src="https://api.lorem.space/image/face?hash=33791" />
+                    <img src={profileImg} />
                   </div>
                 </label>
                 <ul
                   tabindex="0"
                   class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
                 >
+                  <img src={profileImg} className='w-28 h-28 rounded-full mx-auto' alt="" />
+                  <h2 className="my-2 text-center font-bold text-sm">{user?.displayName}</h2>
                   <li>
-                    <a class="justify-between">
+                    <Link to='/profile' class="justify-between">
                       Profile
                       <span class="badge">New</span>
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a>Settings</a>
+                    <Link to='/dashboard'>Dashboard</Link>
                   </li>
                   <li>
-                    <a>Logout</a>
+                    <Link to='/settings'>Settings</Link>
+                  </li>
+                  <li>
+                    <button onClick={()=> signOut(auth)}>Logout</button>
                   </li>
                 </ul>
-              </div>
+              </div>}
             </div>
           </div>
         </div>
