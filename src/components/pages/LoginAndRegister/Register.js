@@ -17,13 +17,21 @@ const Register = () => {
   } = useForm();
   console.log(user);
   const onSubmit = async (data) => {
+
+      let defaultPhoto = '';
+      if(data?.gender === 'male'){
+        defaultPhoto = 'https://i.ibb.co/RP0y9ND/images.jpg'
+      }
+      else if(data?.gender === 'female'){
+        defaultPhoto = 'https://i.ibb.co/vLsdvRb/images.jpg'
+      }
+
       const email = data?.email;
       const password = data?.password;
       const displayName = data?.name;
-      const photoURL = 'https://i.ibb.co/Z6Sh6Vj/admin-user-icon-24.png';
 
       await createUserWithEmailAndPassword(email, password);
-      await updateProfile({displayName, photoURL});
+      await updateProfile({displayName, photoURL: defaultPhoto});
   }
 
   return (

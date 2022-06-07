@@ -7,9 +7,9 @@ import {signOut} from 'firebase/auth';
 const Navbar = () => {
   const [user, loading] = useAuthState(auth);
 
-  const defaultProfileImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOYRUFgudcp4-wVpWkunSHifEyWiDe7kDrlw&usqp=CAU';
+  const defaultProfileImage = 'https://i.ibb.co/Z6Sh6Vj/admin-user-icon-24.png';
 
-  const profileImg =  defaultProfileImage;
+  const profileImg =  user?.photoURL || defaultProfileImage;
 
   const navItem = (
     <>
