@@ -1,14 +1,17 @@
 import React from "react";
 import SocialMediaSignin from "./SocialMediaSignin";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../../firebase.init";
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 
 const Register = () => {
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
-    const [updateProfile, updating] = useUpdateProfile(auth);
+  const [updateProfile, updating] = useUpdateProfile(auth);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const form = location?.state?.form?.pathname || '/';
 
   const {
     register,
@@ -32,6 +35,10 @@ const Register = () => {
 
       await createUserWithEmailAndPassword(email, password);
       await updateProfile({displayName, photoURL: defaultPhoto});
+  }
+
+  if(user){
+    navigate(form, {replace : true});
   }
 
   return (

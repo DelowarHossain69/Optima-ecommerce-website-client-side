@@ -1,12 +1,16 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialMediaSignin from "./SocialMediaSignin";
 import {useSignInWithEmailAndPassword} from "react-firebase-hooks/auth";
 import auth from './../../../firebase.init';
 
 const Login = () => {
   const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.form?.pathname || '/';
+
   const {
     register,
     handleSubmit,
@@ -19,6 +23,10 @@ const Login = () => {
 
     signInWithEmailAndPassword(email, password);
   };
+
+  if(user){
+    navigate(from, {replace: true});
+  }
 
   return (
     <section className="my-24">
