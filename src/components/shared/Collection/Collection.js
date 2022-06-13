@@ -1,32 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import React from "react";
 import { Link } from "react-router-dom";
-import f from "../PrimaryProductCard/PrimaryProductCard";
-import { Pagination, Navigation } from "swiper";
 import ProductCard from "./../PrimaryProductCard/PrimaryProductCard";
-
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
+import { useQuery } from "react-query";
 
 const Collection = () => {
-  const [isMobile, setIsMobile] = useState(3);
-  // console.log(isMobile)
-  const handleResize = () => {
-    if (window.innerWidth < 720) {
-      setIsMobile(1);
-    }
-    else if(window.innerWidth < 980){
-      setIsMobile(2)
-    }
-    else {
-      setIsMobile(3);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-  });
+  const { data: latestProducts, isLoading } = useQuery("latestProducts", () =>
+    fetch("http://localhost:5000/latestProducts").then((res) => res.json())
+  );
+ 
 
   return (
     <section className="py-12">
@@ -47,41 +28,17 @@ const Collection = () => {
       {/* Collection body */}
       <div className="mt-4 grid grid-cols-1 lg:grid-cols-7">
         <div className="col-span-2">
-          <img src="https://i.ibb.co/0Vb483Q/cate2.jpg" className="hidden lg:block" alt="" />
+          <img
+            src="https://i.ibb.co/0Vb483Q/cate2.jpg"
+            className="hidden lg:block"
+            alt=""
+          />
         </div>
 
-        <div className="col-span-5">
-          <Swiper
-            slidesPerView={isMobile}
-            spaceBetween={30}
-            slidesPerGroup={3}
-            loop={true}
-            loopFillGroupWithBlank={true}
-            pagination={{
-              clickable: true,
-            }}
-            navigation={true}
-            modules={[Pagination, Navigation]}
-            className="mySwiper"
-          >
-
-            {/* <SwiperSlide>
-              <div className="flex items-center justify-center">
-                <ProductCard />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="flex items-center justify-center">
-                <ProductCard />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="flex items-center justify-center">
-                <ProductCard />
-              </div>
-            </SwiperSlide> */}
-
-          </Swiper>
+        <div className="col-span-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-auto gap-5">
+            {
+              latestProducts?.map(product => <ProductCard product={product} />)
+            }
         </div>
       </div>
     </section>
