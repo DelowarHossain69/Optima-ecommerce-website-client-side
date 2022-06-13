@@ -2,6 +2,7 @@ import React from "react";
 import ProductCard from "../../../shared/PrimaryProductCard/PrimaryProductCard";
 
 const BestSell = () => {
+  
   return (
     <section className="my-12">
       <h2 className="text-2xl uppercase mb-5">Best Sellers</h2>

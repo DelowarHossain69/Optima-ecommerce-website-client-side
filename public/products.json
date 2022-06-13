@@ -1,0 +1,54 @@
+[
+    {
+      "img": "https://i.ibb.co/tJH4nsp/xb10-portable-wireles.jpg",
+      "price": 338,
+      "name": "Woollen Bomer Boon",
+      "availableQuantity": 57,
+      "ratings": 2,
+      "collectionFor" : ["male"],
+      "description": {
+          "text" : "Product details of Anti-reflective UV400 Squre sunglass for man",
+          "list" : [
+              "Product details of Smart Led Remote Control Bluetooth Speaker Music Bulb - AC 220V, RGB remote control Bluetooth music bulb lamp, Led Music Bulb With Bluetooth Speaker - Pin System",
+              "Item Name: Led Music Bulb With Bluetooth & Speaker",
+              "Product Color: White",
+              "Light Color : Multi Colors",
+              "Light Source: LED"
+          ]
+      },
+      "comments" : [
+          {
+              "name" : "Delowar hossain",
+              "text" : "ai Price e ai product ta amar mote 09/10 product ta onek valo. But alo ta aktu kom tai 1 kom disi.Ar kono pblm nai seller o valo. Sob miliye ami khusi",
+              "profileImg" : "https://i.ibb.co/Z6Sh6Vj/admin-user-icon-24.png",
+              "email" : "daloar24000@gmail.com"
+          }
+      ]
+    },
+    {
+      "img": "https://i.ibb.co/Q6n79Xg/soundlink-bluetooth2.jpg",
+      "price": 338,
+      "name": "Woollen Bomer Boon",
+      "availableQuantity": 57,
+      "ratings": 2,
+      "collectionFor" : ["male"],
+      "description": {
+          "text" : "Product details of Anti-reflective UV400 Squre sunglass for man",
+          "list" : [
+              "Product details of Smart Led Remote Control Bluetooth Speaker Music Bulb - AC 220V, RGB remote control Bluetooth music bulb lamp, Led Music Bulb With Bluetooth Speaker - Pin System",
+              "Item Name: Led Music Bulb With Bluetooth & Speaker",
+              "Product Color: White",
+              "Light Color : Multi Colors",
+              "Light Source: LED"
+          ]
+      },
+      "comments" : [
+          {
+              "name" : "Delowar hossain",
+              "text" : "ai Price e ai product ta amar mote 09/10 product ta onek valo. But alo ta aktu kom tai 1 kom disi.Ar kono pblm nai seller o valo. Sob miliye ami khusi",
+              "profileImg" : "https://i.ibb.co/Z6Sh6Vj/admin-user-icon-24.png",
+              "email" : "daloar24000@gmail.com"
+          }
+      ]
+    },
+]
