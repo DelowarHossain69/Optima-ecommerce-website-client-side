@@ -65,7 +65,7 @@ const Collection = () => {
             className="mySwiper"
           >
 
-            <SwiperSlide>
+            {/* <SwiperSlide>
               <div className="flex items-center justify-center">
                 <ProductCard />
               </div>
@@ -79,7 +79,7 @@ const Collection = () => {
               <div className="flex items-center justify-center">
                 <ProductCard />
               </div>
-            </SwiperSlide>
+            </SwiperSlide> */}
 
           </Swiper>
         </div>

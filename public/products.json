@@ -6,6 +6,7 @@
       "availableQuantity": 57,
       "ratings": 2,
       "collectionFor" : ["male"],
+      "totalSells" : 10,
       "description": {
           "text" : "Product details of Anti-reflective UV400 Squre sunglass for man",
           "list" : [
@@ -32,6 +33,7 @@
       "availableQuantity": 57,
       "ratings": 2,
       "collectionFor" : ["male"],
+      "totalSells" : 12,
       "description": {
           "text" : "Product details of Anti-reflective UV400 Squre sunglass for man",
           "list" : [
@@ -50,5 +52,5 @@
               "email" : "daloar24000@gmail.com"
           }
       ]
-    },
+    }
 ]
