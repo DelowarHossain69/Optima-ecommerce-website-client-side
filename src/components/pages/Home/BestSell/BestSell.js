@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "react-query";
 import ProductCard from "../../../shared/PrimaryProductCard/PrimaryProductCard";
+import Ratings from "../../../shared/Ratings/Ratings";
 
 const BestSell = () => {
   // get popular product
@@ -8,21 +9,27 @@ const BestSell = () => {
     fetch("http://localhost:5000/products").then((res) => res.json())
   );
 
-  console.log(products)
+  // get most popular product
+  const {data:mostSold} = useQuery('mostSold', ()=> 
+    fetch('http://localhost:5000/topSelling')
+    .then(res => res.json())
+  );
+
   return (
     <section className="my-12">
-      <h2 className="text-2xl uppercase mb-5">Best Sellers</h2>
+      <h2 className="text-2xl uppercase mb-5">Top Selling</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-8 gap-5">
-        <div className="col-span-3 bg-gray-100 p-3 rounded">
+        <div className="col-span-3 bg-gray-100 rounded shadow-lg">
           <img
-            src="https://i.ibb.co/Q6n79Xg/soundlink-bluetooth2.jpg"
+            src={mostSold?.img}
             className="w-full"
-            alt=""
+            alt="popular product"
           />
-          <div className="text-center">
-            <h3 className="font-bold  text-2xl mb-3">Woollen Bomer</h3>
-            <h3 className="font-bold text-xl">$ 100</h3>
+          <div className="text-center lg:text-left p-4">
+            <p className="flex items-center"><Ratings ratings={mostSold?.ratings}/> ({mostSold?.totalSells})</p>
+            <h3 className="font-bold  text-2xl my-3">{mostSold?.name}</h3>
+            <h3 className="font-bold text-xl">Price : $ {mostSold?.price}</h3>
             <button className="btn btn-primary mt-3">Add to card</button>
           </div>
         </div>

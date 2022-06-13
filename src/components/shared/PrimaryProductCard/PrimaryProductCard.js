@@ -4,8 +4,7 @@ import Ratings from './../Ratings/Ratings';
 
 const ProductCard = ({product}) => {
 
-  console.log(product)
-  const {img, price, name, ratings, _id} = product;
+  const {img, price, name, ratings,} = product;
 
   return (
     <div className="bg-white shadow-lg rounded p-5 text-center md:text-left cursor-pointer hover:shadow-xl hover:translate-y-[-5px] duration-500 transition-all max-w-xs">

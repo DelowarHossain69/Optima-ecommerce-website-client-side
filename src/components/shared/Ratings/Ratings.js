@@ -8,7 +8,7 @@ const Ratings = ({ratings}) => {
                 [...Array(ratings)]?.map(rating => <AiFillStar className="text-yellow-500 text-lg" />)
             }
             {
-                [...Array(5 - ratings)]?.map(rating => <AiOutlineStar className='text-gray-500' />)
+                [...Array(5 - ratings)]?.map(rating => <AiOutlineStar className='text-gray-500 text-lg' />)
             }
         </div>
     );
