@@ -11,7 +11,7 @@ const Collection = () => {
 
   return (
     <section className="py-12">
-      <h2 className="text-3xl mb-4">Mobile</h2>
+      <h2 className="text-3xl mb-4">Latest Products</h2>
       {/* Collection Banner */}
       <div className=" overflow-hidden">
         <div className="hover:scale-105 duration-500">
