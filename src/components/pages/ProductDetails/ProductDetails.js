@@ -3,10 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { storeDataToLocalStorage } from "../../../Utilities/localStorage";
 import Ratings from "../../shared/Ratings/Ratings";
 import ReviewCard from "./ReviewCard";
 
-const ProductDetails = () => {
+const ProductDetails = ({passProductInfo}) => {
   const { id } = useParams();
   const [orderQuantity, setOrderQuantity] = useState(1);
   const [product, setProduct] = useState({});
@@ -26,8 +27,9 @@ const ProductDetails = () => {
     totalSells,
     description,
     comments,
+    _id
   } = product;
-  console.log(comments);
+
   // update product quantity one by one
   const addQuantity = () => {
     if (orderQuantity > 0 && orderQuantity < 5) {
@@ -46,6 +48,19 @@ const ProductDetails = () => {
   let subTotal = orderQuantity * price;
   let shippingCharge = orderQuantity * 10;
   let totalAmount = subTotal + shippingCharge;
+
+  // Store data in localStorage
+  const productInfo = () =>{
+    const info ={
+      name,
+      totalAmount,
+      orderQuantity,
+      img,
+      _id
+    }
+
+    storeDataToLocalStorage(info);
+  }
 
   return (
     <section className="py-12 mx-5 lg:mx-0">
@@ -82,7 +97,7 @@ const ProductDetails = () => {
             </div>
 
             <div className="flex space-x-5 mt-5">
-              <button className="flex-1 btn border-0 text-black bg-primary p-2 rounded hover:bg-[#fedc1bde]">
+              <button className="flex-1 btn border-0 text-black bg-primary p-2 rounded hover:bg-[#fedc1bde]" onClick={()=> productInfo()}>
                 Add to card
               </button>
               <button className="flex-1 btn border-0 bg-[#F57224] text-white p-2 rounded hover:bg-[#f57124e9]">
