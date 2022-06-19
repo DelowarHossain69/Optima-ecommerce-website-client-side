@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../../firebase.init";
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import Loading from "../../shared/Loading/Loading";
+import useToken from './../../../hooks/useToken';
 
 const Register = () => {
   const [createUserWithEmailAndPassword, user, loading, error] =
@@ -19,6 +21,8 @@ const Register = () => {
     formState: { errors },
   } = useForm();
   console.log(user);
+  const [token] = useToken(user);
+
   const onSubmit = async (data) => {
 
       let defaultPhoto = '';
@@ -37,8 +41,12 @@ const Register = () => {
       await updateProfile({displayName, photoURL: defaultPhoto});
   }
 
-  if(user){
+  if(token){
     navigate(form, {replace : true});
+  }
+
+  if(loading || updating){
+    return <Loading />
   }
 
   return (

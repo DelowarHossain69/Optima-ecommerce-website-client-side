@@ -4,9 +4,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialMediaSignin from "./SocialMediaSignin";
 import {useSignInWithEmailAndPassword} from "react-firebase-hooks/auth";
 import auth from './../../../firebase.init';
+import Loading from "../../shared/Loading/Loading";
+import useToken from './../../../hooks/useToken';
 
 const Login = () => {
-  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword, user, loading, loginError] = useSignInWithEmailAndPassword(auth);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state?.form?.pathname || '/';
@@ -23,9 +25,15 @@ const Login = () => {
 
     signInWithEmailAndPassword(email, password);
   };
+  const [token] = useToken(user);
 
-  if(user){
+
+  if(token){
     navigate(from, {replace: true});
+  }
+
+  if(loading){
+    return <Loading />
   }
 
   return (
@@ -73,6 +81,8 @@ const Login = () => {
               )}
             </label>
           </div>
+            
+            <p className="mb-3 text-red-500">{loginError?.message}</p>
 
           <button className="btn btn-primary w-full">Login</button>
         </form>

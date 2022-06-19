@@ -1,18 +1,25 @@
 import React from 'react';
 import {useSignInWithFacebook, useSignInWithGoogle} from "react-firebase-hooks/auth";
 import { useLocation, useNavigate } from 'react-router-dom';
+import Loading from '../../shared/Loading/Loading';
 import auth from './../../../firebase.init';
+import useToken from './../../../hooks/useToken';
 
 const SocialMediaSignin = () => {
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
     const [signInWithFacebook, facebookUser, facebookLoading, facebookError] = useSignInWithFacebook(auth);
+    const [token] = useToken(googleUser || facebookUser);
     const navigate = useNavigate();
     const location = useLocation();
     const form = location?.state?.form?.pathname || '/';
 
 
-    if(googleUser || facebookUser){
+    if(token){
         navigate(form, {replace : true});
+    }
+
+    if(googleLoading || facebookLoading){
+        return <Loading />
     }
 
     return (
