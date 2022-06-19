@@ -7,12 +7,14 @@ const storeData = (data) =>{
 
 // get data function
 const getData = () => {
-   return localStorage.getItem('card-info');
+    const currentData = localStorage.getItem('card-info');
+    const parseData = JSON.parse(currentData);
+    return parseData;
 }
 
 // Store a new product 
 const storeDataToLocalStorage = (info) => {
-    const { orderQuantity, _id:id} = info;
+    const { orderQuantity,totalAmount, _id:id} = info;
 
     // get previous card info
     const previousInfo = getData();
@@ -20,8 +22,7 @@ const storeDataToLocalStorage = (info) => {
     if(previousInfo){
       let totalStoredQuantity = 0;
       // Parse product info;
-      const currentProductInfo = JSON.parse(previousInfo);
-      currentProductInfo.map(i => totalStoredQuantity += i.orderQuantity);
+      previousInfo.map(i => totalStoredQuantity += i.orderQuantity);
 
       if((totalStoredQuantity + orderQuantity) > 5){
         Swal.fire({
@@ -33,18 +34,19 @@ const storeDataToLocalStorage = (info) => {
       }
       else{
         // Is this product already stored?
-        const isStored = currentProductInfo.find(i => i._id === id);
-        console.log(isStored);
+        const isStored = previousInfo.find(i => i._id === id);
+
         if(isStored){
             const updatedData = isStored;
             updatedData.orderQuantity += orderQuantity;
-            const restData = currentProductInfo.filter(r => r._id !== id);
+            updatedData.totalAmount += totalAmount;
+            const restData = previousInfo.filter(r => r._id !== id);
 
             const newInfo = [...restData, updatedData];
             storeData(newInfo);
         }
         else{
-            const newInfo = [...currentProductInfo, info];
+            const newInfo = [...previousInfo, info];
             storeData(newInfo);
         }
       }
@@ -55,8 +57,29 @@ const storeDataToLocalStorage = (info) => {
     }
 }
 
+// get all items
+const getProductFromLocalStorage = () => {
+    return getData();
+}
 
+// get all stored quantity and total price
+const cardInfo = () => {
+    const currentInfo = getData();
+    const quantity = currentInfo?.reduce((sum, product)=> product.orderQuantity + sum, 0)
+    const price = currentInfo?.reduce((sum, product) => product.totalAmount + sum, 0);
+    return {quantity, price};
+}
+// Delete product
+const deleteItemFromLocalStorage = (id) => {
+    const currentItems = getData();
+    const rest = currentItems.filter(item => item._id !== id);
+    storeData(rest);
+    return getData();
+}
 
 export {
     storeDataToLocalStorage,
+    cardInfo,
+    getProductFromLocalStorage,
+    deleteItemFromLocalStorage,
 }

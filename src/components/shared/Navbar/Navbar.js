@@ -3,13 +3,14 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 import auth from "./../../../firebase.init";
 import { signOut } from "firebase/auth";
+import { cardInfo } from "../../../Utilities/localStorage";
 
 const Navbar = () => {
   const [user, loading] = useAuthState(auth);
   const defaultProfileImage = "https://i.ibb.co/Z6Sh6Vj/admin-user-icon-24.png";
   const profileImg = user?.photoURL || defaultProfileImage;
-
-
+  // get localStore data for card;
+  const {quantity, price} = cardInfo();
 
   const navItem = (
     <>
@@ -84,7 +85,7 @@ const Navbar = () => {
                       d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                     />
                   </svg>
-                  <span class="badge badge-sm indicator-item">8</span>
+                  <span class="badge badge-sm indicator-item">{quantity || 0}</span>
                 </div>
               </label>
               <div
@@ -92,8 +93,8 @@ const Navbar = () => {
                 class="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow"
               >
                 <div class="card-body">
-                  <span class="font-bold text-lg">8 Items</span>
-                  <span class="text-info">Subtotal: $999</span>
+                  <span class="font-bold text-lg">{quantity || 0} Items</span>
+                  <span class="text-info">Subtotal: ${price || 0}</span>
                   <div class="card-actions">
                     <Link to="/addToCard" className="w-full">
                       <button class="btn btn-primary btn-block">

@@ -72,7 +72,7 @@ const ProductDetails = ({passProductInfo}) => {
           <div className="flex-1">
             <h1 className="text-2xl">{name}</h1>
             <p className="flex items-center my-1">
-              <Ratings ratings={ratings} />{" "}
+              <Ratings ratings={ratings} />
               <span className="ml-3 text-sm">{ratings} Reviews</span>
             </p>
             <h3>Total sells : {totalSells} piece</h3>
