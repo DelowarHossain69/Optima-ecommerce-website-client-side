@@ -47,13 +47,13 @@ const useModal = () => {
     }
 
     // Confirm alert
-    const confirmAlert = (text) => {
+    const confirmAlert = (text, type = 'success') => {
       Swal.fire({
         position: 'center',
-        icon: 'success',
+        icon: type,
         title: text,
         showConfirmButton: false,
-        timer: 2000
+        timer: 3000
       });
     }
 

@@ -8,7 +8,7 @@ import Loading from "../../shared/Loading/Loading";
 import Ratings from "../../shared/Ratings/Ratings";
 import ReviewCard from "./ReviewCard";
 
-const ProductDetails = ({sharePaymentInfo}) => {
+const ProductDetails = ({sharePaymentInfo, shareCardInfo}) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(true);
@@ -68,6 +68,7 @@ const ProductDetails = ({sharePaymentInfo}) => {
   // Store data in localStorage
   const productInfo = () =>{
     storeDataToLocalStorage(ProductInvoice);
+    shareCardInfo(ProductInvoice);
   }
 
   // Share data for payment;

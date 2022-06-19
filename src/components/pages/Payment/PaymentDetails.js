@@ -3,8 +3,11 @@ import Payment from "./Payment";
 import Loading from './../../shared/Loading/Loading';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import useModal from './../../../hooks/useModal';
 
 const PaymentDetails = ({ paymentInfo }) => {
+  const {confirmAlert} = useModal();
+  const [paymentComplementing, setPaymentCompleting] = useState(false);
   const { _id, img, name, orderQuantity, totalAmount } = paymentInfo;
   const [discountAmount, setDiscountAmount] = useState(0);
   
@@ -25,11 +28,11 @@ const PaymentDetails = ({ paymentInfo }) => {
     const promoCode = e.target.offer.value;
     
     if(promoCode === offersInfo.promoCode){
-        alert(`Congratulation you got ${offersInfo.discount} OFF`);
+      confirmAlert(`Congratulation you got ${offersInfo.discount} OFF`);
         setDiscountAmount(offersInfo.discount);
     }
     else{
-        alert('Invalid promo code');
+      confirmAlert('Invalid promo code', 'error');
     }
   };
 
@@ -42,17 +45,22 @@ const PaymentDetails = ({ paymentInfo }) => {
     price : total
   }
 
-// loading and redirect
-  const location = useLocation();
-  const navigate = useNavigate();
-  const from = location.state?.from?.pathname || "/";
-
+// When user reload this page;
+const navigate = useNavigate();
  useEffect(()=>{
     if(JSON.stringify(paymentInfo) === JSON.stringify({})){
         navigate('/')
       }
  }, [paymentInfo, navigate]);
 
+
+// Set loading;
+const getPaymentLoadingStatus = (status) =>{
+  setPaymentCompleting(status);
+}
+ if(paymentComplementing){
+  return <Loading />
+ }
 
   return (
     <section className="py-12 mx-3 lg:mx-0">
@@ -79,6 +87,7 @@ const PaymentDetails = ({ paymentInfo }) => {
                 action=""
                 className="relative w-full max-w-xs"
                 onSubmit={getOff}
+                autoComplete ='off'
               >
                 <input
                   type="text"
@@ -97,7 +106,11 @@ const PaymentDetails = ({ paymentInfo }) => {
         {/* Payment method  */}
         <div className="flex-1 shadow-lg p-5">
             <h2 className="text-2xl text-center mb-5">Please complete your payment</h2>
-            <Payment paymentInfo={paymentInformation} />
+            <Payment 
+            paymentInfo={paymentInformation} 
+            setPaymentLoadingStatus={getPaymentLoadingStatus} 
+            />
+            
         </div>
       </div>
     </section>

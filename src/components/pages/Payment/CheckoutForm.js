@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from "react";
-import {
-  CardElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import useModal from "../../../hooks/useModal";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-const CheckoutForm = ({ paymentInfo }) => {
+const CheckoutForm = ({ paymentInfo, setPaymentLoadingStatus }) => {
+  const [isLoading, setLoading] = useState(false);
   const [cardError, setCardError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const { id, img, name, orderQuantity, price } = paymentInfo;
-  const {confirmAlert} = useModal();
+  const { confirmAlert } = useModal();
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
 
   useEffect(() => {
-    if(price){
-        fetch("http://localhost:5000/create-payment-intent", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify({ price }),
-          })
-            .then((res) => res.json())
-            .then((secret) => setClientSecret(secret.clientSecret));
+    if (price) {
+      fetch("http://localhost:5000/create-payment-intent", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ price }),
+      })
+        .then((res) => res.json())
+        .then((secret) => setClientSecret(secret.clientSecret));
     }
   }, [price]);
 
@@ -41,14 +38,16 @@ const CheckoutForm = ({ paymentInfo }) => {
     if (card == null) {
       return;
     }
-    
+
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
-      card : card,
+      card: card,
     });
 
     setCardError(error?.message || "");
-    
+    // Set loading
+    setLoading(true);
+
     // Confirm card payment
     const { paymentIntent, error: paymentConfirmError } =
       await stripe.confirmCardPayment(clientSecret, {
@@ -60,15 +59,19 @@ const CheckoutForm = ({ paymentInfo }) => {
         },
       });
 
-      setCardError(paymentConfirmError?.message || '');
+    setCardError(paymentConfirmError?.message || "");
 
-// After complete the payment
-      if(paymentIntent?.id){
-        confirmAlert('Your payment has been completed.')
-        navigate('/');
-      };
+    // After complete the payment
+    if (paymentIntent?.id) {
+      setLoading(false);
+      confirmAlert("Your payment has been completed.");
+      navigate("/");
+    }
   };
 
+  //   Set loading
+  setPaymentLoadingStatus(isLoading);
+  
   return (
     <form onSubmit={handleSubmit}>
       <CardElement

@@ -20,10 +20,16 @@ function App() {
     setPaymentInfo(info);
   }
 
+  // share product info to (Add to card)
+  const [cardInfo, setCardInfo] = useState({});
+  const shareCardInfo = (quantity) => {
+    setCardInfo(quantity);
+  }
+
   return (
     <main className="bg-[#fff6f667]">
       <div className="max-w-6xl mx-auto">
-        <Navbar />
+        <Navbar getCardInfo={cardInfo}/>
 
         <Routes>
           <Route path="/" element={<Home />} />
@@ -36,8 +42,10 @@ function App() {
           />
 
           <Route path="/productDetails/:id" element={
-          <ProductDetails sharePaymentInfo={sharePaymentInfo} />} 
-          />
+          <ProductDetails 
+            sharePaymentInfo={sharePaymentInfo}
+            shareCardInfo={shareCardInfo}
+           />}/>
 
           <Route path="/paymentDetails" element={
           <PaymentDetails paymentInfo={paymentInfo}/>} 
