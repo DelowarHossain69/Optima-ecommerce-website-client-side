@@ -7,10 +7,10 @@ import {
 import AddToCardItem from "./AddToCardItem";
 import { faMoneyBill1Wave, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import useModal from './../../../hooks/useModal';
+import useModal from "./../../../hooks/useModal";
 
-const AddToCard = ({sharePaymentInfo, shareProductQuantity}) => {
-  const {confirmModal,confirmModalWithSuccessAlert} = useModal();
+const AddToCard = ({ sharePaymentInfo, shareCardInfo }) => {
+  const { confirmModal, confirmModalWithSuccessAlert } = useModal();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -20,18 +20,24 @@ const AddToCard = ({sharePaymentInfo, shareProductQuantity}) => {
 
   //   Delete a ( add to card item) form localStorage;
   const deleteItem = (id) => {
-      confirmModal(function(){
-        const restItems = deleteItemFromLocalStorage(id);
-        setProducts(restItems);
-      });
+    confirmModal(function () {
+      const restItems = deleteItemFromLocalStorage(id);
+      setProducts(restItems);
+
+      // Update navbar card info
+      shareCardInfo({});
+    });
   };
 
   //   Delete all card items;
   const deleteAllCardItems = () => {
-    confirmModalWithSuccessAlert(function(){
-        localStorage.clear();
-        setProducts([]);
-    })
+    confirmModalWithSuccessAlert(function () {
+      localStorage.clear();
+      setProducts([]);
+
+      // Update navbar card info
+      shareCardInfo({});
+    });
   };
 
   // Calculate
@@ -50,7 +56,11 @@ const AddToCard = ({sharePaymentInfo, shareProductQuantity}) => {
       <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 space-x-0 lg:space-x-8">
         <div className="w-full lg:w-4/6">
           {products?.map((product) => (
-            <AddToCardItem product={product} deleteItem={deleteItem} sharePaymentInfo={sharePaymentInfo} shareProductQuantity={shareProductQuantity} />
+            <AddToCardItem
+              product={product}
+              deleteItem={deleteItem}
+              sharePaymentInfo={sharePaymentInfo}
+            />
           ))}
         </div>
 
@@ -67,7 +77,10 @@ const AddToCard = ({sharePaymentInfo, shareProductQuantity}) => {
               <FontAwesomeIcon icon={faMoneyBill1Wave} className="mr-2" />
               Pay
             </button>
-            <button className="btn w-32 bg-[#fb5200] border-0 hover:bg-[#fb5400e1] text-lg font-normal" onClick={deleteAllCardItems}>
+            <button
+              className="btn w-32 bg-[#fb5200] border-0 hover:bg-[#fb5400e1] text-lg font-normal"
+              onClick={deleteAllCardItems}
+            >
               <FontAwesomeIcon icon={faTrash} className="mr-2" />
               Remove
             </button>

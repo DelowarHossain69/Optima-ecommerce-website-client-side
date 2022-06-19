@@ -20,7 +20,7 @@ function App() {
     setPaymentInfo(info);
   }
 
-  // share product info to (Add to card)
+  // share product info for (Add to card)
   const [cardInfo, setCardInfo] = useState({});
   const shareCardInfo = (quantity) => {
     setCardInfo(quantity);
@@ -38,8 +38,10 @@ function App() {
           <Route path="/register" element={<Register />} />
 
           <Route path="/addToCard" element={
-          <AddToCard sharePaymentInfo={sharePaymentInfo} />} 
-          />
+          <AddToCard 
+            sharePaymentInfo={sharePaymentInfo} 
+            shareCardInfo={shareCardInfo}
+          />} />
 
           <Route path="/productDetails/:id" element={
           <ProductDetails 
