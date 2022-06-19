@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Payment from "./Payment";
 
 const PaymentDetails = ({ paymentInfo }) => {
   const { _id, img, name, orderQuantity, totalAmount } = paymentInfo;
@@ -29,6 +30,15 @@ const PaymentDetails = ({ paymentInfo }) => {
         alert('Invalid promo code');
     }
   };
+
+//   updated product info after discount;
+  const paymentInformation = {
+    name,
+    img,
+    orderQuantity,
+    id : _id,
+    price : total
+  }
 
   return (
     <section className="py-12 mx-3 lg:mx-0">
@@ -70,9 +80,10 @@ const PaymentDetails = ({ paymentInfo }) => {
           </div>
         </div>
 
-        {/* Payment method */}
-        <div className="flex-1">
-            
+        {/* Payment method  */}
+        <div className="flex-1 shadow-lg p-5">
+            <h2 className="text-2xl text-center mb-5">Please complete your payment</h2>
+            <Payment paymentInfo={paymentInformation} />
         </div>
       </div>
     </section>
