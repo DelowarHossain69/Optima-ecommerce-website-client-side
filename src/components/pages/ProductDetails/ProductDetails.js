@@ -2,13 +2,14 @@ import { faMinus, faPlus, faTruck, faMoneyBill1Wave, faHouseLaptop, faBuildingCi
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { storeDataToLocalStorage } from "../../../Utilities/localStorage";
 import Ratings from "../../shared/Ratings/Ratings";
 import ReviewCard from "./ReviewCard";
 
-const ProductDetails = ({passProductInfo}) => {
+const ProductDetails = ({sharePaymentInfo}) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [orderQuantity, setOrderQuantity] = useState(1);
   const [product, setProduct] = useState({});
 
@@ -49,17 +50,29 @@ const ProductDetails = ({passProductInfo}) => {
   let shippingCharge = orderQuantity * 10;
   let totalAmount = subTotal + shippingCharge;
 
+  // This information for store in localStorage and payment;
+  const ProductInvoice = {
+    name,
+    totalAmount,
+    orderQuantity,
+    img,
+    _id
+  }
+
   // Store data in localStorage
   const productInfo = () =>{
-    const info ={
-      name,
-      totalAmount,
-      orderQuantity,
-      img,
-      _id
-    }
+    storeDataToLocalStorage(ProductInvoice);
+  }
 
-    storeDataToLocalStorage(info);
+  // Share data for payment;
+  const goToPayment = () => {
+    sharePaymentInfo(ProductInvoice);
+  }
+
+  // Buy product
+  const buyNow = () => {
+    goToPayment();
+    navigate('/paymentDetails');
   }
 
   return (
@@ -100,7 +113,7 @@ const ProductDetails = ({passProductInfo}) => {
               <button className="flex-1 btn border-0 text-black bg-primary p-2 rounded hover:bg-[#fedc1bde]" onClick={()=> productInfo()}>
                 Add to card
               </button>
-              <button className="flex-1 btn border-0 bg-[#F57224] text-white p-2 rounded hover:bg-[#f57124e9]">
+              <button className="flex-1 btn border-0 bg-[#F57224] text-white p-2 rounded hover:bg-[#f57124e9]" onClick={buyNow}>
                 Buy now
               </button>
             </div>

@@ -9,8 +9,18 @@ import ProductDetails from './components/pages/ProductDetails/ProductDetails';
 import AllProducts from './components/pages/AllProducts/AllProducts';
 import Dashboard from './components/pages/Dashboard/Dashboard';
 import AddToCard from './components/pages/ProductDetails/AddToCard';
+import PaymentDetails from "./components/pages/Payment/PaymentDetails";
+import { useState } from 'react';
+
 
 function App() {
+  // share product info for payment
+  const [paymentInfo, setPaymentInfo] = useState({});
+  const sharePaymentInfo = info => {
+    setPaymentInfo(info);
+  }
+
+
   return (
     <main className="bg-[#fff6f667]">
       <div className="max-w-6xl mx-auto">
@@ -22,7 +32,14 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/addToCard" element={<AddToCard />} />
-          <Route path="/productDetails/:id" element={<ProductDetails />} />
+          
+          <Route path="/productDetails/:id" element={
+          <ProductDetails sharePaymentInfo={sharePaymentInfo} />} 
+          />
+
+          <Route path="/paymentDetails" element={
+          <PaymentDetails paymentInfo={paymentInfo}/>} 
+          />
 
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
