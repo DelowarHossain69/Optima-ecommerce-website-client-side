@@ -59,7 +59,7 @@ const CheckoutForm = ({ paymentInfo }) => {
 
       setCardError(paymentConfirmError?.message || '');
 
-
+      
       
   };
 
