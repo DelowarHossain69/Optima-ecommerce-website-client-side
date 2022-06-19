@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import ProductCard from "../../../shared/PrimaryProductCard/PrimaryProductCard";
 import Ratings from "../../../shared/Ratings/Ratings";
+import Loading from '../../../shared/Loading/Loading';
 
 const BestSell = () => {
   // get popular product
@@ -14,6 +15,10 @@ const BestSell = () => {
     fetch('http://localhost:5000/topSelling')
     .then(res => res.json())
   );
+
+  if(isLoading){
+    return <Loading />
+  }
 
   return (
     <section className="my-12">

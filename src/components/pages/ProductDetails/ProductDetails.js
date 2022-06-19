@@ -4,19 +4,25 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { storeDataToLocalStorage } from "../../../Utilities/localStorage";
+import Loading from "../../shared/Loading/Loading";
 import Ratings from "../../shared/Ratings/Ratings";
 import ReviewCard from "./ReviewCard";
 
 const ProductDetails = ({sharePaymentInfo}) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [isLoading, setLoading] = useState(true);
   const [orderQuantity, setOrderQuantity] = useState(1);
   const [product, setProduct] = useState({});
 
   useEffect(() => {
     fetch(`http://localhost:5000/productDetails/${id}`)
       .then((res) => res.json())
-      .then((data) => setProduct(data));
+      .then((data) =>{
+        setProduct(data)
+        setLoading(false);
+      });
+
   }, [id]);
 
   const {
@@ -73,6 +79,11 @@ const ProductDetails = ({sharePaymentInfo}) => {
   const buyNow = () => {
     goToPayment();
     navigate('/paymentDetails');
+  }
+
+  // loading
+  if(isLoading){
+    return <Loading />
   }
 
   return (

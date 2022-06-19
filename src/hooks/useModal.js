@@ -53,8 +53,8 @@ const useModal = () => {
         icon: 'success',
         title: text,
         showConfirmButton: false,
-        timer: 1500
-      })
+        timer: 2000
+      });
     }
 
     return {

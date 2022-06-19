@@ -1,5 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-query';
+import Loading from '../../shared/Loading/Loading';
 import ProductCard from '../../shared/PrimaryProductCard/PrimaryProductCard';
 
 const AllProducts = () => {
@@ -7,6 +8,11 @@ const AllProducts = () => {
         fetch('http://localhost:5000/products')
         .then(res => res.json())
     );
+
+    if(isLoading){
+        return <Loading />
+    }
+
     return (
         <section className='py-12 mx-3 lg:mx-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5'>
 

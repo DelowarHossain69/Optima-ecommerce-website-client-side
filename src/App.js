@@ -20,7 +20,6 @@ function App() {
     setPaymentInfo(info);
   }
 
-
   return (
     <main className="bg-[#fff6f667]">
       <div className="max-w-6xl mx-auto">
@@ -31,8 +30,11 @@ function App() {
           <Route path="/stored" element={<AllProducts />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/addToCard" element={<AddToCard />} />
-          
+
+          <Route path="/addToCard" element={
+          <AddToCard sharePaymentInfo={sharePaymentInfo} />} 
+          />
+
           <Route path="/productDetails/:id" element={
           <ProductDetails sharePaymentInfo={sharePaymentInfo} />} 
           />

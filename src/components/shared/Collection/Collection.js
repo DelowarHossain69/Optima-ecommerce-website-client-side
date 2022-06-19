@@ -2,12 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ProductCard from "./../PrimaryProductCard/PrimaryProductCard";
 import { useQuery } from "react-query";
+import Loading from "../Loading/Loading";
 
 const Collection = () => {
   const { data: latestProducts, isLoading } = useQuery("latestProducts", () =>
     fetch("http://localhost:5000/latestProducts").then((res) => res.json())
   );
  
+  if(isLoading){
+    return <Loading />
+  }
 
   return (
     <section className="py-12">

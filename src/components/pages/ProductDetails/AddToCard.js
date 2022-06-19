@@ -9,7 +9,7 @@ import { faMoneyBill1Wave, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import useModal from './../../../hooks/useModal';
 
-const AddToCard = () => {
+const AddToCard = ({sharePaymentInfo}) => {
   const {confirmModal,confirmModalWithSuccessAlert} = useModal();
   const [products, setProducts] = useState([]);
 
@@ -50,7 +50,7 @@ const AddToCard = () => {
       <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 space-x-0 lg:space-x-8">
         <div className="w-full lg:w-4/6">
           {products?.map((product) => (
-            <AddToCardItem product={product} deleteItem={deleteItem} />
+            <AddToCardItem product={product} deleteItem={deleteItem} sharePaymentInfo={sharePaymentInfo} />
           ))}
         </div>
 

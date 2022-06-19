@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import {
   CardElement,
-  Elements,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import useModal from "../../../hooks/useModal";
+import { useNavigate } from 'react-router-dom';
 
 const CheckoutForm = ({ paymentInfo }) => {
   const [cardError, setCardError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const { id, img, name, orderQuantity, price } = paymentInfo;
+  const {confirmAlert} = useModal();
+  const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
 
@@ -59,8 +62,11 @@ const CheckoutForm = ({ paymentInfo }) => {
 
       setCardError(paymentConfirmError?.message || '');
 
-      
-      
+// After complete the payment
+      if(paymentIntent?.id){
+        confirmAlert('Your payment has been completed.')
+        navigate('/');
+      };
   };
 
   return (

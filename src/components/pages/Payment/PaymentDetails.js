@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Payment from "./Payment";
+import Loading from './../../shared/Loading/Loading';
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const PaymentDetails = ({ paymentInfo }) => {
   const { _id, img, name, orderQuantity, totalAmount } = paymentInfo;
@@ -14,7 +17,6 @@ const PaymentDetails = ({ paymentInfo }) => {
   }
 
   //   Calculate
-
   const total = totalAmount - discountAmount;
 
   //   Promo code
@@ -39,6 +41,18 @@ const PaymentDetails = ({ paymentInfo }) => {
     id : _id,
     price : total
   }
+
+// loading and redirect
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
+
+ useEffect(()=>{
+    if(JSON.stringify(paymentInfo) === JSON.stringify({})){
+        navigate('/')
+      }
+ }, [paymentInfo, navigate]);
+
 
   return (
     <section className="py-12 mx-3 lg:mx-0">
