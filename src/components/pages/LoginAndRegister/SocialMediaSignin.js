@@ -11,11 +11,11 @@ const SocialMediaSignin = () => {
     const [token] = useToken(googleUser || facebookUser);
     const navigate = useNavigate();
     const location = useLocation();
-    const form = location?.state?.form?.pathname || '/';
+    const from = location?.state?.from?.pathname || '/';
 
 
     if(token){
-        navigate(form, {replace : true});
+        navigate(from, {replace : true});
     }
 
     if(googleLoading || facebookLoading){

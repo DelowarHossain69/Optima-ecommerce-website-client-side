@@ -11,7 +11,7 @@ const Login = () => {
   const [signInWithEmailAndPassword, user, loading, loginError] = useSignInWithEmailAndPassword(auth);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location?.state?.form?.pathname || '/';
+  const from = location?.state?.from?.pathname || "/";
 
   const {
     register,
@@ -29,10 +29,11 @@ const Login = () => {
 
 
   if(token){
+    console.log('ok', from)
     navigate(from, {replace: true});
   }
 
-  if(loading){
+  if(loading){    
     return <Loading />
   }
 

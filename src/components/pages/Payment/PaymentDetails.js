@@ -46,12 +46,12 @@ const PaymentDetails = ({ paymentInfo }) => {
   }
 
 // When user reload this page;
-const navigate = useNavigate();
- useEffect(()=>{
-    if(JSON.stringify(paymentInfo) === JSON.stringify({})){
-        navigate('/')
-      }
- }, [paymentInfo, navigate]);
+// const navigate = useNavigate();
+//  useEffect(()=>{
+//     if(JSON.stringify(paymentInfo) === JSON.stringify({})){
+//         navigate('/')
+//       }
+//  }, [paymentInfo, navigate]);
 
 
 // Set loading;

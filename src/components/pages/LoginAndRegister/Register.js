@@ -13,14 +13,14 @@ const Register = () => {
   const [updateProfile, updating] = useUpdateProfile(auth);
   const location = useLocation();
   const navigate = useNavigate();
-  const form = location?.state?.form?.pathname || '/';
+  const from = location?.state?.from?.pathname || "/";
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  console.log(user);
+
   const [token] = useToken(user);
 
   const onSubmit = async (data) => {
@@ -42,7 +42,7 @@ const Register = () => {
   }
 
   if(token){
-    navigate(form, {replace : true});
+    navigate(from, {replace : true});
   }
 
   if(loading || updating){

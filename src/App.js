@@ -11,6 +11,7 @@ import Dashboard from './components/pages/Dashboard/Dashboard';
 import AddToCard from './components/pages/ProductDetails/AddToCard';
 import PaymentDetails from "./components/pages/Payment/PaymentDetails";
 import { useState } from 'react';
+import RequireAuth from "./components/shared/Required/RequireAuth";
 
 
 function App() {
@@ -50,10 +51,16 @@ function App() {
            />}/>
 
           <Route path="/paymentDetails" element={
-          <PaymentDetails paymentInfo={paymentInfo}/>} 
-          />
+            <RequireAuth>
+                <PaymentDetails paymentInfo={paymentInfo}/> 
+            </RequireAuth>
+          }/>
 
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={
+            <RequireAuth>
+              <Dashboard />
+            </RequireAuth>
+          } />
         </Routes>
 
         <Footer />
